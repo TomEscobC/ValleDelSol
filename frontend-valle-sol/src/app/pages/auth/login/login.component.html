@@ -1,0 +1,34 @@
+<div class="login-screen">
+    <div class="grid-bg"></div>
+
+    <div class="glass-card">
+        <div style="margin-bottom: 35px;">
+            <span
+                style="font-size: 3.5rem; display: block; filter: drop-shadow(0 0 15px #10b981); margin-bottom: 10px;">🌲</span>
+            <h2 style="color: #f8fafc; font-weight: 800; font-size: 1.6rem; margin: 0; letter-spacing: -0.5px;">
+                ValleDelSol <span style="color: #34d399; text-shadow: 0 0 10px rgba(52,211,153,0.3);">GIS</span>
+            </h2>
+            <p style="color: #64748b; font-size: 0.85rem; margin: 6px 0 0 0; font-weight: 500;">Portal de Monitoreo
+                Forestal Asíncrono</p>
+        </div>
+
+        <div class="input-wrapper">
+            <label>Operador ID</label>
+            <input #user type="text" class="input-field" placeholder="ej: admin_vsol">
+        </div>
+
+        <div class="input-wrapper">
+            <label>Llave de Acceso</label>
+            <input #pass type="password" class="input-field" placeholder="••••••••••••">
+        </div>
+
+        <button class="btn-submit" (click)="handleLogin(user.value, pass.value)">
+            AUTENTICAR EN CONSOLA
+        </button>
+
+        <div style="margin-top: 25px; font-size: 0.7rem; color: #475569; font-weight: 600; line-height: 1.4;">
+            🔒 CONEXIÓN SECURE SHELL (SSH)<br>
+            Resguardado mediante AWS IAM & Cognito Services.
+        </div>
+    </div>
+</div>

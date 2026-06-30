@@ -1,0 +1,22 @@
+# Java / Maven
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs de ejecución local
+.run-logs/
+*.log
+
+# Node / Angular
+node_modules/
+frontend-valle-sol/dist/
+frontend-valle-sol/.angular/
+
+# IDE / SO
+.idea/
+*.iml
+.DS_Store
+
+# Conversión temporal de documentos
+~$*.docx

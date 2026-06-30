@@ -1,0 +1,71 @@
+<main class="fade-in">
+    <div style="margin-bottom: 25px;">
+        <h1 style="font-size: 2rem; font-weight: 800; margin: 0;">Municipalidad Valle Del Sol <span
+                class="text-emerald-neon">GIS</span></h1>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Centro de Comando — monitoreo en tiempo real del riesgo forestal en
+            Valle del Sol.</p>
+    </div>
+
+    <div *ngIf="offline" class="offline-note">⚠️ Modo demostración: el BFF no respondió, se muestran datos de respaldo.</div>
+
+    <!-- Banner de alertas de evacuación vigentes (dato vivo) -->
+    <div *ngFor="let a of alertas" class="evac-banner">
+        <span style="font-size:1.6rem;">🚨</span>
+        <div>
+            <div style="color:#fca5a5; font-weight:800;">{{ a.titulo }}</div>
+            <div style="color:#fecaca; font-size:0.82rem;">{{ a.mensaje }}</div>
+        </div>
+    </div>
+
+    <!-- KPIs en vivo desde el BFF -->
+    <div class="kpi-row">
+        <div class="glass-card-pro" style="padding: 20px; border-top: 3px solid #10b981;">
+            <p style="color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; margin: 0 0 10px 0;">
+                <span class="text-emerald-neon">Total Reportes</span></p>
+            <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800;">{{ data?.totalReportes ?? '—' }}</h2>
+        </div>
+        <div class="glass-card-pro" style="padding: 20px; border-top: 3px solid #ef4444;">
+            <p style="color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; margin: 0 0 10px 0;">
+                <span class="text-emerald-neon">Focos Críticos</span></p>
+            <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800;">{{ data?.reportesCriticos ?? '—' }}
+                <span style="font-size: 0.9rem; color: #ef4444; font-weight: normal;">Activos</span></h2>
+        </div>
+        <div class="glass-card-pro" style="padding: 20px; border-top: 3px solid #f59e0b;">
+            <p style="color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; margin: 0 0 10px 0;">
+                <span class="text-emerald-neon">Alertas Activas</span></p>
+            <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800;">{{ data?.alertasActivas ?? '—' }}
+                <span style="font-size: 0.9rem; color: #f59e0b; font-weight: normal;">Comunidad</span></h2>
+        </div>
+    </div>
+
+    <!-- Tabla de últimos reportes (dato vivo desde PostgreSQL vía BFF) -->
+    <div class="glass-card-pro" style="padding: 0; overflow: hidden;">
+        <div style="padding: 20px; border-bottom: 1px solid rgba(250,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; font-size: 1rem; color: #fff;">Últimos Reportes Ciudadanos</h3>
+            <span style="color:#64748b; font-size:0.78rem;">Fuente: ms-reportes-ciudadano · PostgreSQL</span>
+        </div>
+        <table class="primeng-table">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Sector / Referencia</th>
+                    <th>Tipo</th>
+                    <th>Gravedad</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let r of ultimos">
+                    <td style="font-family: monospace; color: #34d399; font-weight: bold;">{{ r.folio }}</td>
+                    <td>{{ r.sectorReferencia || '—' }}</td>
+                    <td>{{ r.tipo }}</td>
+                    <td><span class="badge" [ngClass]="badgeClass(r.gravedad)">{{ r.gravedad }}</span></td>
+                    <td>{{ r.estado }}</td>
+                </tr>
+                <tr *ngIf="!cargando && ultimos.length === 0">
+                    <td colspan="5" style="text-align:center; color:#64748b;">Sin reportes registrados todavía.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

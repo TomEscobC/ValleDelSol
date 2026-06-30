@@ -1,0 +1,21 @@
+services:
+  db-postgres:
+    image: postgres:15
+    container_name: vallesol_db
+    environment:
+      POSTGRES_USER: admin_vallesol
+      POSTGRES_PASSWORD: SecurePass2026!
+      POSTGRES_DB: db_incendios_forestales
+    # Mapeado al puerto 5434 del host para no chocar con otros PostgreSQL locales (5432/5433).
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin_vallesol -d db_incendios_forestales"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 760" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a2517"/>
+      <stop offset="100%" stop-color="#030a06"/>
+    </linearGradient>
+    <style>
+      .title{fill:#e2e8f0;font-weight:800}
+      .sub{fill:#94a3b8;font-size:13px}
+      .card{fill:rgba(15,23,42,0.65);stroke:rgba(16,185,129,0.35);stroke-width:1.5;rx:14}
+      .lbl{fill:#34d399;font-weight:700;font-size:15px}
+      .txt{fill:#cbd5e1;font-size:12px}
+      .port{fill:#fde047;font-size:11px;font-weight:700}
+      .edge{stroke:#10b981;stroke-width:2;fill:none;marker-end:url(#arrow)}
+      .edgelbl{fill:#94a3b8;font-size:11px}
+      .tech{fill:#64748b;font-size:11px;font-style:italic}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1160" height="760" fill="url(#bg)"/>
+  <text x="40" y="48" class="title" font-size="26">🌲 Valle del Sol — Arquitectura de Microservicios</text>
+  <text x="40" y="72" class="sub">Subdirección de Gestión de Emergencias · Plataforma de reporte ciudadano y alertas comunitarias (EP3 · DSY1106)</text>
+
+  <!-- ACTORES -->
+  <rect x="60" y="110" width="220" height="92" class="card" rx="14"/>
+  <text x="80" y="142" class="lbl">📱 Ciudadano / Vecino</text>
+  <text x="80" y="166" class="txt">Reporta focos de incendio</text>
+  <text x="80" y="184" class="txt">con geolocalización y gravedad</text>
+
+  <rect x="880" y="110" width="220" height="92" class="card" rx="14"/>
+  <text x="900" y="142" class="lbl">🛡️ Operador / Comando</text>
+  <text x="900" y="166" class="txt">Monitorea reportes y</text>
+  <text x="900" y="184" class="txt">alertas en el Dashboard GIS</text>
+
+  <!-- FRONTEND -->
+  <rect x="380" y="110" width="400" height="92" class="card" rx="14" stroke="#34d399"/>
+  <text x="400" y="140" class="lbl">🖥️ Frontend — Angular 21 (componente NPM)</text>
+  <text x="400" y="164" class="txt">Reportar Emergencia · Dashboard · Centro de Comando · Login</text>
+  <text x="400" y="186" class="tech">HttpClient → consume únicamente el BFF</text>
+
+  <!-- BFF -->
+  <rect x="380" y="270" width="400" height="100" class="card" rx="14" stroke="#34d399" stroke-width="2"/>
+  <text x="400" y="300" class="lbl">⚙️ BFF — Backend For Frontend</text>
+  <text x="400" y="324" class="txt">Orquesta el flujo de negocio y AGREGA datos para el dashboard</text>
+  <text x="400" y="344" class="tech">Spring Boot · REST · RestTemplate · CORS</text>
+  <text x="690" y="300" class="port">:8080</text>
+
+  <!-- MICROSERVICIOS -->
+  <rect x="120" y="450" width="320" height="120" class="card" rx="14"/>
+  <text x="140" y="480" class="lbl">🔥 ms-reportes-ciudadano</text>
+  <text x="140" y="504" class="txt">CRUD de reportes · reglas de negocio</text>
+  <text x="140" y="522" class="txt">gravedad, estados, validaciones</text>
+  <text x="140" y="544" class="tech">Spring Boot · JPA/Hibernate · arquetipo Maven</text>
+  <text x="392" y="480" class="port">:8081</text>
+
+  <rect x="720" y="450" width="320" height="120" class="card" rx="14"/>
+  <text x="740" y="480" class="lbl">🚨 ms-alertas-comunidad</text>
+  <text x="740" y="504" class="txt">Genera alertas (Informativa /</text>
+  <text x="740" y="522" class="txt">Preventiva / Evacuación) por zona</text>
+  <text x="740" y="544" class="tech">Spring Boot · JPA/Hibernate · arquetipo Maven</text>
+  <text x="992" y="480" class="port">:8082</text>
+
+  <!-- BASE DE DATOS -->
+  <rect x="420" y="630" width="320" height="96" class="card" rx="14" stroke="#3b82f6"/>
+  <text x="440" y="662" class="lbl" fill="#60a5fa">🗄️ PostgreSQL 15 (Docker)</text>
+  <text x="440" y="686" class="txt">db_incendios_forestales</text>
+  <text x="440" y="706" class="txt">tablas: reportes · alertas — persistencia + respaldo (pg_dump)</text>
+
+  <!-- ARISTAS -->
+  <!-- ciudadano -> frontend -->
+  <path class="edge" d="M280,156 L378,156"/>
+  <!-- frontend -> operador -->
+  <path class="edge" d="M782,156 L878,156"/>
+  <!-- frontend <-> bff -->
+  <path class="edge" d="M580,204 L580,268"/>
+  <text x="592" y="240" class="edgelbl">REST / JSON (CORS)</text>
+  <!-- bff -> ms-reportes -->
+  <path class="edge" d="M430,372 L300,448"/>
+  <text x="300" y="420" class="edgelbl">POST/GET reportes</text>
+  <!-- bff -> ms-alertas -->
+  <path class="edge" d="M730,372 L860,448"/>
+  <text x="770" y="420" class="edgelbl">POST generar alerta</text>
+  <!-- ms-reportes -> db -->
+  <path class="edge" d="M300,570 L470,628"/>
+  <text x="300" y="606" class="edgelbl">JPA</text>
+  <!-- ms-alertas -> db -->
+  <path class="edge" d="M860,570 L690,628"/>
+  <text x="840" y="606" class="edgelbl">JPA</text>
+
+  <!-- NOTA FLUJO -->
+  <rect x="60" y="270" width="280" height="100" fill="rgba(239,68,68,0.08)" stroke="rgba(239,68,68,0.4)" stroke-width="1.5" rx="12"/>
+  <text x="78" y="296" fill="#fca5a5" font-weight="700" font-size="13">🔑 Flujo crítico (business core)</text>
+  <text x="78" y="318" class="txt">Reporte CRÍTICO (ALTA/CRÍTICA) →</text>
+  <text x="78" y="336" class="txt">se persiste → el BFF genera</text>
+  <text x="78" y="354" class="txt">automáticamente una alerta de evacuación.</text>
+</svg>

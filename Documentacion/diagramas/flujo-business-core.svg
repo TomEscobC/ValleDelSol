@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a2517"/><stop offset="100%" stop-color="#030a06"/>
+    </linearGradient>
+    <marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#34d399"/></marker>
+    <marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="1120" height="620" fill="url(#bg2)"/>
+  <text x="40" y="44" fill="#e2e8f0" font-size="22" font-weight="800">Flujo de negocio crítico — Reporte ciudadano → Alerta de evacuación</text>
+  <text x="40" y="68" fill="#94a3b8" font-size="13">Prueba End-to-End: CP-E2E01. Cada reporte CRÍTICO debe terminar generando una alerta de evacuación persistida.</text>
+
+  <!-- lifelines -->
+  <g font-size="14" font-weight="700" fill="#34d399" text-anchor="middle">
+    <rect x="60"  y="100" width="170" height="44" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(16,185,129,0.4)"/><text x="145" y="127">📱 Ciudadano</text>
+    <rect x="300" y="100" width="170" height="44" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(16,185,129,0.4)"/><text x="385" y="127">🖥️ Frontend</text>
+    <rect x="540" y="100" width="170" height="44" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(16,185,129,0.6)" stroke-width="2"/><text x="625" y="127">⚙️ BFF</text>
+    <rect x="780" y="100" width="150" height="44" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(16,185,129,0.4)"/><text x="855" y="127">🔥 ms-reportes</text>
+    <rect x="960" y="100" width="150" height="44" rx="10" fill="rgba(15,23,42,0.7)" stroke="rgba(16,185,129,0.4)"/><text x="1035" y="127">🚨 ms-alertas</text>
+  </g>
+  <g stroke="rgba(148,163,184,0.25)" stroke-dasharray="4 5">
+    <line x1="145" y1="144" x2="145" y2="580"/><line x1="385" y1="144" x2="385" y2="580"/>
+    <line x1="625" y1="144" x2="625" y2="580"/><line x1="855" y1="144" x2="855" y2="580"/><line x1="1035" y1="144" x2="1035" y2="580"/>
+  </g>
+
+  <g font-size="12">
+    <!-- 1 -->
+    <path d="M145,190 L383,190" stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#a2)"/>
+    <text x="160" y="182" fill="#cbd5e1">1. Completa y envía reporte (gravedad CRÍTICA)</text>
+    <!-- 2 -->
+    <path d="M385,230 L623,230" stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#a2)"/>
+    <text x="400" y="222" fill="#cbd5e1">2. POST /api/bff/reportes</text>
+    <!-- 3 -->
+    <path d="M625,270 L853,270" stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#a2)"/>
+    <text x="640" y="262" fill="#cbd5e1">3. POST /api/reportes (persiste en PostgreSQL)</text>
+    <!-- 3r -->
+    <path d="M853,306 L627,306" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/>
+    <text x="640" y="298" fill="#94a3b8">REP-0006 (estado PENDIENTE)</text>
+    <!-- decision -->
+    <rect x="470" y="330" width="310" height="30" rx="8" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)"/>
+    <text x="485" y="350" fill="#fca5a5" font-weight="700">¿gravedad ∈ {ALTA, CRÍTICA}?  →  SÍ</text>
+    <!-- 4 -->
+    <path d="M625,392 L1033,392" stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#a2)"/>
+    <text x="640" y="384" fill="#cbd5e1">4. POST /api/alertas/generar (zona, gravedad, reporteOrigenId)</text>
+    <!-- 4r -->
+    <path d="M1033,428 L627,428" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/>
+    <text x="640" y="420" fill="#94a3b8">Alerta nivel EVACUACIÓN (activa, persistida)</text>
+    <!-- 5 -->
+    <path d="M623,468 L387,468" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/>
+    <text x="400" y="460" fill="#94a3b8">5. 201 { reporte, alertaGenerada:true, alerta }</text>
+    <!-- 6 -->
+    <path d="M385,508 L147,508" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/>
+    <text x="160" y="500" fill="#94a3b8">6. Muestra folio + alerta de evacuación al ciudadano</text>
+  </g>
+
+  <rect x="60" y="540" width="1050" height="50" rx="10" fill="rgba(16,185,129,0.07)" stroke="rgba(16,185,129,0.3)"/>
+  <text x="80" y="562" fill="#34d399" font-size="13" font-weight="700">Resultado esperado / obtenido:</text>
+  <text x="80" y="580" fill="#cbd5e1" font-size="12">alertaGenerada = true · alerta.nivel = EVACUACION · 1 fila en tabla 'alertas' con reporteOrigenId del reporte. ✔ Verificado (unitario, e2e y manual).</text>
+</svg>

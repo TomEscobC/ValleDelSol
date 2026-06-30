@@ -1,0 +1,47 @@
+<main class="fade-in">
+    <div class="map-wrapper-tactical">
+
+        <div id="radarMap" class="map-layer"></div>
+
+        <div class="floating-panel-left">
+            <h2 style="color: #34d399; font-weight: 800; font-size: 1.1rem; margin: 0 0 5px 0;">V-SOL GIS</h2>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin: 0 0 20px 0;">Mando Táctico e Histórico</p>
+
+            <input type="text" placeholder="Búsqueda de coordenadas..."
+                style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 10px; color: white; font-size: 0.85rem; outline: none; margin-bottom: 20px;">
+
+            <div
+                style="font-size: 0.7rem; font-weight: bold; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; margin-bottom: 15px;">
+                Vincular Reportes GPS
+            </div>
+
+            <div class="scroll-dark"
+                style="flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 12px;">
+                <div *ngFor="let m of mockHistorial"
+                    style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; transition: 0.2s;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px;">
+                        <span style="color: #34d399; font-family: monospace; font-size: 0.75rem; font-weight: bold;">[{{
+                            m.id }}]</span>
+                    </div>
+                    <div style="font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 10px;">
+                        {{ m.emoji }} {{ m.dir }}
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-waze" style="flex: 1;" (click)="goToWaze(m.lat, m.lng)">🚗 Waze</button>
+                        <button class="btn-maps" style="flex: 1;" (click)="goToMaps(m.lat, m.lng)">🗺️ G-Maps</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-toolbar">
+            <button class="tool-btn active">↖️</button>
+            <button class="tool-btn">🔥</button>
+            <button class="tool-btn">🚓</button>
+            <button class="tool-btn">📡</button>
+            <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.2);"></div>
+            <button class="tool-btn">📜</button>
+        </div>
+    </div>
+</main>
